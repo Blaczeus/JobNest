@@ -2,19 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Job;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 
-class JobController extends Controller
+class JobAdminController extends Controller
 {
-    public function index() {
-        $jobs = Job::with('employer')->latest()->simplePaginate(10);
-        return view('jobs.index', compact('jobs'));
-    }
-
     public function create() {
         return view('jobs.create');
     }
@@ -39,11 +32,6 @@ class JobController extends Controller
         Job::create($validated);
 
         return redirect('/jobs')->with('success', 'Job created successfully!');
-    }
-
-    public function show(Job $job) {
-
-        return view('jobs.show', compact('job'));
     }
 
     public function edit(Job $job) {

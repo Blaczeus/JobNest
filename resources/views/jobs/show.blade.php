@@ -25,25 +25,29 @@
 
     <!-- Buttons: Update & Delete -->
     <div class="mt-6 flex justify-between">
-      <div>
-        <!-- Update Job Button -->
-        <a href="{{ url('/jobs/' . $job->id . '/edit') }}" 
-           class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">
-          Update Job
-        </a>
-      </div>
+      @can('edit', $job)
+        <div>
+          <!-- Update Job Button -->
+          <a href="{{ url('/jobs/' . $job->id . '/edit') }}" 
+            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">
+            Update Job
+          </a>
+        </div>
+      @endcan
 
-      <div>
-        <!-- Delete Job Button -->
-        <form action="{{ url('/jobs/' . $job->id) }}" method="POST" 
-              onsubmit="return confirm('Are you sure you want to delete this job?');">
-          @csrf
-          @method('DELETE')
-          <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm">
-            Delete Job
-          </button>
-        </form>
-      </div>
+      @can('delete', $job)
+        <div>
+          <!-- Delete Job Button -->
+          <form action="{{ url('/jobs/' . $job->id) }}" method="POST" 
+                onsubmit="return confirm('Are you sure you want to delete this job?');">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm">
+              Delete Job
+            </button>
+          </form>
+        </div>
+      @endcan
     </div>
   </div>
 </x-layout>

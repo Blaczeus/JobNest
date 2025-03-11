@@ -11,28 +11,28 @@
           <x-form-field>
             <x-form-label for="title">Job Title</x-form-label>
             <div class="mt-2">
-              <x-form-input name="title" placeholder="Full Stack Engineer" />
+              <x-form-input name="title" value="{{ old('title', $job->title ?? '') }}" placeholder="Full Stack Engineer" />
               <x-form-error name="title" />
             </div>
           </x-form-field>
           <x-form-field>
               <x-form-label for="salary">Salary</x-form-label>
               <div class="mt-2">
-                  <x-form-input name="salary" placeholder="50,000" />
+                  <x-form-input name="salary" value="{{ old('salary', $job->salary ?? '') }}" placeholder="50,000" />
                   <x-form-error name="salary" />
               </div>
           </x-form-field>
           <x-form-field>
               <x-form-label for="location">Location</x-form-label>
               <div class="mt-2">
-                  <x-form-input name="location" placeholder="Seattle" />
+<x-form-input name="location" value="{{ old('location', $job->location ?? '') }}" placeholder="Seattle" />
                   <x-form-error name="location" />
               </div>
           </x-form-field>
           <x-form-field>
               <x-form-label for="company">Company</x-form-label>
               <div class="mt-2">
-                  <x-form-input name="company" placeholder="Leon Holdings Plc" />
+                  <x-form-input name="company" value="{{ old('company', $job->company ?? '') }}" placeholder="Leon Holdings Plc" />
                   <x-form-error name="company" />
               </div>
           </x-form-field>
