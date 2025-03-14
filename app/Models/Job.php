@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Employer;
 use App\Models\Tag;
 
+/**
+ * @method static create(array $validated)
+ */
 class Job extends Model
 {
     use HasFactory;
@@ -14,7 +17,7 @@ class Job extends Model
     protected $table = 'job_listings';
     // protected $fillable = [
     //     'employer_id',
-    //     'title', 
+    //     'title',
     //     'salary',
     //     'location',
     //     'company',

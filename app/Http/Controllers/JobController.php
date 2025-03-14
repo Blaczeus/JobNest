@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\JobPosted;
+use App\Models\Employer;
 use App\Models\Job;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 
 class JobController extends Controller
 {
@@ -20,9 +23,7 @@ class JobController extends Controller
     }
 
     public function store(Request $request) {
-
         $cleanSalary = preg_replace('/[^0-9]/', '', $request->salary);
-
         $request->merge(['salary' => $cleanSalary]);
 
         $validated = $request->validate([
@@ -32,14 +33,23 @@ class JobController extends Controller
             'company' => 'required|string|max:255',
         ]);
 
-        $validated['employer_id'] = 4;
+        $user = Auth::user();
 
+        $employer = Employer::firstOrCreate(
+            ['user_id' => $user->id],
+            ['name' => $user->first_name ?? 'Chidiebere']
+        );
+
+        $validated['employer_id'] = $employer->id;
         $validated['salary'] = '$' . number_format($validated['salary'], 0, '.', ',') . ' USD';
 
-        Job::create($validated);
+        $job = Job::create($validated);
+
+        Mail::to($job->employer->user)->send(new JobPosted($job));
 
         return redirect('/jobs')->with('success', 'Job created successfully!');
     }
+
 
     public function show(Job $job) {
 
