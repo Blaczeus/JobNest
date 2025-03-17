@@ -13,7 +13,7 @@ Route::resource('jobs', JobController::class);
 
 Route::middleware(['auth'])->group(function () {
   Route::get('/jobs/create', [JobController::class, 'create']);
-  
+
   Route::post('/jobs', [JobController::class,'store']);
 
   Route::get('/jobs/{job}/edit', [JobController::class, 'edit'])
