@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\TranslateJob;
 use App\Mail\JobPosted;
 use App\Models\Employer;
 use App\Models\Job;
@@ -37,7 +38,7 @@ class JobController extends Controller
 
         $employer = Employer::firstOrCreate(
             ['user_id' => $user->id],
-            ['name' => $user->first_name ?? 'Chidiebere']
+            ['name' => $user->first_name ?? 'Admin'],
         );
 
         $validated['employer_id'] = $employer->id;
@@ -45,7 +46,7 @@ class JobController extends Controller
 
         $job = Job::create($validated);
 
-        Mail::to($job->employer->user)->send(new JobPosted($job));
+        TranslateJob::dispatch($job);
 
         return redirect('/jobs')->with('success', 'Job created successfully!');
     }
